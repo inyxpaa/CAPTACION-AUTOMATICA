@@ -1,0 +1,39 @@
+# Entorno virtual
+venv/
+.venv/
+env/
+
+# Variables de entorno (NUNCA subir al repositorio)
+.env
+
+# Base de datos
+data/*.db
+data/*.db-shm
+data/*.db-wal
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Playwright
+.playwright/
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
