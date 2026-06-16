@@ -8,18 +8,17 @@ from datetime import datetime
 
 from app.core.db import SessionLocal, Contacto, Campana, EmailLog
 from app.core.i18n import t, get_lang
+from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
 
-st.set_page_config(page_title="Dashboard · ORESNA", page_icon="O", layout="wide")
+st.set_page_config(page_title="Panel de Control · ORESNA", page_icon="🏠", layout="wide")
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
-.stApp { background: #0a0e1a !important; color: #f1f5f9 !important; }
-[data-testid="stSidebar"] { background: #111827 !important; border-right: 1px solid #2d3748 !important; }
-[data-testid="stMetricValue"] { color: #e2c36b !important; font-weight: 800 !important; font-size: 2rem !important; }
-</style>
-""", unsafe_allow_html=True)
+inject_theme_css()
+inject_watermark()
+render_theme_toggle(sidebar=True)
+
+theme = get_theme()
+gold = "#8a6a18" if theme == "light" else "#e2c36b"
+muted = "#64748b"
 
 
 def cargar_stats() -> dict:
@@ -71,10 +70,10 @@ def cargar_stats() -> dict:
 
 
 st.markdown(f"""
-<h1 style="color:#e2c36b; font-weight:800; font-size:2rem; margin-bottom:4px;">
+<h1 style="color:{gold}; font-weight:800; font-size:2rem; margin-bottom:4px;">
     {t("dashboard_title")}
 </h1>
-<p style="color:#64748b; font-size:0.95rem; margin-bottom:28px;">
+<p style="color:{muted}; font-size:0.95rem; margin-bottom:28px;">
     {t("dashboard_subtitle")}
 </p>
 """, unsafe_allow_html=True)

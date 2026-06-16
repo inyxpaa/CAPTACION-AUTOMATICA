@@ -7,24 +7,23 @@ from pathlib import Path
 
 from app.core.config import config
 from app.core.i18n import t
+from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
 
-st.set_page_config(page_title="Configuracion · ORESNA", page_icon="O", layout="wide")
+st.set_page_config(page_title="Ajustes · ORESNA", page_icon="🏠", layout="wide")
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
-.stApp { background: #0a0e1a !important; color: #f1f5f9 !important; }
-[data-testid="stSidebar"] { background: #111827 !important; border-right: 1px solid #2d3748 !important; }
-.stButton > button { background: linear-gradient(135deg, #374151, #4b5563) !important; color: white !important; border: none !important; border-radius: 8px !important; font-weight: 600 !important; }
-</style>
-""", unsafe_allow_html=True)
+inject_theme_css()
+inject_watermark()
+render_theme_toggle(sidebar=True)
+
+theme = get_theme()
+gold  = "#8a6a18" if theme == "light" else "#e2c36b"
+muted = "#64748b"
 
 st.markdown(f"""
-<h1 style="color:#e2c36b; font-weight:800; font-size:2rem; margin-bottom:4px;">
+<h1 style="color:{gold}; font-weight:800; font-size:2rem; margin-bottom:4px;">
     {t("config_title")}
 </h1>
-<p style="color:#64748b; font-size:0.95rem; margin-bottom:28px;">
+<p style="color:{muted}; font-size:0.95rem; margin-bottom:28px;">
     {t("config_subtitle")}
 </p>
 """, unsafe_allow_html=True)
@@ -56,7 +55,9 @@ with col3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-tab1, tab2, tab3, tab4 = st.tabs([t("tab_ia"), t("tab_email"), t("tab_scraping"), t("tab_company")])
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    t("tab_ia"), t("tab_email"), t("tab_scraping"), t("tab_company"), "🛠️ Desarrollador"
+])
 
 ENV_PATH = config.BASE_DIR / ".env"
 
@@ -93,6 +94,22 @@ def guardar_env(vars_dict: dict):
 
 with tab1:
     st.markdown(f"#### {t('ia_provider')}")
+
+    st.info("""
+**¿Qué API necesito para la IA?**
+
+Elige **una** de estas dos opciones:
+
+- 🟢 **Groq** *(recomendado — completamente gratuito)*
+  1. Ve a [console.groq.com](https://console.groq.com) → Crear cuenta gratis
+  2. En el menú lateral: **API Keys** → **Create API Key**
+  3. Copia la clave (empieza por `gsk_...`) y pégala abajo
+
+- 🔵 **OpenAI** *(de pago, ~€0,15 por 1.000 emails generados)*
+  1. Ve a [platform.openai.com](https://platform.openai.com) → Crear cuenta
+  2. Menú: **API Keys** → **Create new secret key**
+  3. Copia la clave (empieza por `sk-...`) y pégala abajo
+    """)
 
     vars_env = leer_env()
 
@@ -148,10 +165,30 @@ with tab1:
             guardar_env(nuevas)
             st.success(t("ia_saved"))
 
-    st.info(t("ia_recommendation"))
-
 with tab2:
     st.markdown(f"#### {t('email_config_title')}")
+
+    st.info("""
+**¿Cómo configurar el envío de emails?**
+
+El sistema usa **Resend** para enviar emails profesionales. Es gratuito hasta 3.000 emails/mes.
+
+**Paso 1 — Crear cuenta en Resend**
+1. Ve a [resend.com](https://resend.com) → Sign Up (gratis)
+2. Verifica tu email
+
+**Paso 2 — Verificar tu dominio de envío**
+1. En Resend: **Domains** → **Add Domain** → escribe `oresna.es`
+2. Resend te dará unos registros DNS (TXT, MX...)
+3. Ve al panel de tu hosting/dominio y añade esos registros
+4. En Resend pulsa **Verify** — tardará unos minutos
+
+**Paso 3 — Obtener la API Key**
+1. En Resend: **API Keys** → **Create API Key**
+2. Copia la clave (empieza por `re_...`) y pégala abajo
+
+> ⚠️ Si no tienes acceso al dominio `oresna.es`, contacta con quien gestiona el hosting.
+    """)
 
     with st.form("form_email"):
         vars_env = leer_env()
@@ -186,8 +223,6 @@ with tab2:
                 "EMAIL_FROM_NAME": email_from_name,
             })
             st.success(t("email_saved"))
-
-    st.markdown(t("email_spam_instructions"))
 
 with tab3:
     st.markdown(f"#### {t('scraping_title')}")
@@ -263,3 +298,54 @@ with tab4:
                 "EMPRESA_WEB": empresa_web,
             })
             st.success(t("company_saved"))
+
+with tab5:
+    st.markdown("#### Información del Desarrollador")
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    surf  = "#f1f5f9" if theme == "light" else "#111827"
+    bord  = "#e2e8f0" if theme == "light" else "#2d3748"
+    body  = "#334155" if theme == "light" else "#94a3b8"
+
+    col_dev, col_ver = st.columns([3, 1])
+    with col_dev:
+        st.markdown(f"""
+<div style="background:{surf}; border:1px solid {bord};
+            border-radius:12px; padding:28px 32px;">
+    <p style="font-size:1.15rem; font-weight:700; margin:0 0 2px; color:{gold}; letter-spacing:-0.3px;">
+        Iñigo Del Mazo Monreal
+    </p>
+    <p style="color:{muted}; margin:0 0 18px; font-size:0.85rem; letter-spacing:0.3px; text-transform:uppercase;">
+        Desarrollador de software
+    </p>
+    <p style="color:{body}; font-size:0.9rem; line-height:1.65; margin:0;">
+        Desarrollo e implantación de herramientas digitales a medida para empresas.
+        Esta aplicación fue construida específicamente para
+        <strong style="color:{gold};">ORESNA Inmobiliaria</strong> (Navarra, España)
+        con el objetivo de automatizar la captación comercial B2B mediante Inteligencia Artificial.
+    </p>
+</div>
+        """, unsafe_allow_html=True)
+
+    with col_ver:
+        st.markdown(f"""
+<div style="background:{surf}; border:1px solid {bord};
+            border-radius:12px; padding:24px; text-align:center; height:100%;">
+    <p style="color:{muted}; font-size:0.7rem; margin:0 0 6px; text-transform:uppercase; letter-spacing:1.5px;">Versión</p>
+    <p style="font-size:1.8rem; font-weight:800; color:{gold}; margin:0; letter-spacing:-1px;">1.0.0</p>
+    <p style="color:{muted}; font-size:0.72rem; margin:10px 0 0; letter-spacing:0.5px;">ORESNA CAPTADOR</p>
+    <p style="color:{muted}; font-size:0.7rem; margin:4px 0 0;">2026</p>
+</div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("##### Resumen de componentes")
+    st.markdown("""
+| Componente | Tecnología | Propósito |
+|---|---|---|
+| Panel visual | Streamlit | Interfaz de usuario |
+| Agentes IA | CrewAI + Groq / OpenAI | Búsqueda y redacción |
+| Scraping | Playwright | Rastreo web |
+| Base de datos | SQLite | Almacenamiento local |
+| Emails | Resend API | Envío de correos |
+    """)

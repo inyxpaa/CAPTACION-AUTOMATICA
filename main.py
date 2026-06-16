@@ -32,11 +32,11 @@ def main():
         str(ui_path),
         "--server.port=8501",
         "--server.headless=false",
-        "--theme.base=dark",
-        "--theme.primaryColor=#e2c36b",
-        "--theme.backgroundColor=#0a0e1a",
-        "--theme.secondaryBackgroundColor=#111827",
-        "--theme.textColor=#f1f5f9",
+        "--theme.base=light",
+        "--theme.primaryColor=#2563eb",
+        "--theme.backgroundColor=#f8fafc",
+        "--theme.secondaryBackgroundColor=#ffffff",
+        "--theme.textColor=#0f172a",
         "--browser.gatherUsageStats=false",
     ])
 

@@ -8,19 +8,20 @@ import pandas as pd
 from app.core.db import SessionLocal, Contacto, Campana
 from app.core.config import config
 from app.core.i18n import t
+from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
 
-st.set_page_config(page_title="Constructoras · ORESNA", page_icon="O", layout="wide")
+st.set_page_config(page_title="Constructoras · ORESNA", page_icon="🏠", layout="wide")
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
-.stApp { background: #0a0e1a !important; color: #f1f5f9 !important; }
-[data-testid="stSidebar"] { background: #111827 !important; border-right: 1px solid #2d3748 !important; }
-[data-testid="stMetricValue"] { color: #e2c36b !important; font-weight: 800 !important; }
-.stButton > button { background: linear-gradient(135deg, #1d4ed8, #3b82f6) !important; color: white !important; border: none !important; border-radius: 8px !important; font-weight: 600 !important; }
-</style>
-""", unsafe_allow_html=True)
+inject_theme_css()
+inject_watermark()
+render_theme_toggle(sidebar=True)
+
+theme = get_theme()
+gold   = "#8a6a18" if theme == "light" else "#e2c36b"
+muted  = "#64748b"
+bg1s   = "#eff6ff" if theme == "light" else "#1a1a2e"
+bg1e   = "#dbeafe" if theme == "light" else "#0f3460"
+border1 = "#bfdbfe" if theme == "light" else "#1e3a5f"
 
 
 def cargar_constructoras(filtro_estado=None, filtro_localidad=None):
@@ -37,12 +38,12 @@ def cargar_constructoras(filtro_estado=None, filtro_localidad=None):
 
 
 st.markdown(f"""
-<div style="background:linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); border-radius:16px;
-            padding:28px 32px; margin-bottom:28px; border:1px solid #1e3a5f;">
-    <h1 style="color:#e2c36b; font-size:1.8rem; font-weight:800; margin:0;">
+<div style="background:linear-gradient(135deg, {bg1s} 0%, {bg1e} 100%); border-radius:16px;
+            padding:28px 32px; margin-bottom:28px; border:1px solid {border1};">
+    <h1 style="color:{gold}; font-size:1.8rem; font-weight:800; margin:0;">
         {t("constructoras_title")}
     </h1>
-    <p style="color:#94a3b8; margin:8px 0 0; font-size:0.95rem;">
+    <p style="color:{muted}; margin:8px 0 0; font-size:0.95rem;">
         {t("constructoras_desc")}
     </p>
 </div>

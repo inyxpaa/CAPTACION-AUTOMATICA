@@ -8,19 +8,23 @@ import pandas as pd
 from app.core.db import SessionLocal, Contacto
 from app.core.config import config
 from app.core.i18n import t
+from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
 
-st.set_page_config(page_title="Alianzas B2B · ORESNA", page_icon="O", layout="wide")
+st.set_page_config(page_title="Alianzas B2B · ORESNA", page_icon="🏠", layout="wide")
 
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
-html, body, [class*="css"] { font-family: 'Inter', sans-serif !important; }
-.stApp { background: #0a0e1a !important; color: #f1f5f9 !important; }
-[data-testid="stSidebar"] { background: #111827 !important; border-right: 1px solid #2d3748 !important; }
-[data-testid="stMetricValue"] { color: #a8e6cf !important; font-weight: 800 !important; }
-.stButton > button { background: linear-gradient(135deg, #0d3b2e, #1a5c45) !important; color: white !important; border: none !important; border-radius: 8px !important; font-weight: 600 !important; }
-</style>
-""", unsafe_allow_html=True)
+inject_theme_css()
+inject_watermark()
+render_theme_toggle(sidebar=True)
+
+theme = get_theme()
+muted  = "#64748b"
+bg2s   = "#f0fdf4" if theme == "light" else "#0d3b2e"
+bg2e   = "#dcfce7" if theme == "light" else "#1a5c45"
+border2 = "#86efac" if theme == "light" else "#1e5c3a"
+card_title = "#065f46" if theme == "light" else "#a8e6cf"
+card_text  = "#047857" if theme == "light" else "#7ec8a0"
+card_bg    = "#f0fdf4" if theme == "light" else "#111827"
+card_border = "#bbf7d0" if theme == "light" else "#2d3748"
 
 TIPOS_EMPRESA = {
     "reformas": "Reformas",
@@ -44,12 +48,12 @@ def cargar_alianzas(filtro_tipo=None, filtro_estado=None):
 
 
 st.markdown(f"""
-<div style="background:linear-gradient(135deg, #0d3b2e 0%, #1a5c45 100%); border-radius:16px;
-            padding:28px 32px; margin-bottom:28px; border:1px solid #1e5c3a;">
-    <h1 style="color:#a8e6cf; font-size:1.8rem; font-weight:800; margin:0;">
+<div style="background:linear-gradient(135deg, {bg2s} 0%, {bg2e} 100%); border-radius:16px;
+            padding:28px 32px; margin-bottom:28px; border:1px solid {border2};">
+    <h1 style="color:{card_title}; font-size:1.8rem; font-weight:800; margin:0;">
         {t("alianzas_title")}
     </h1>
-    <p style="color:#7ec8a0; margin:8px 0 0; font-size:0.95rem;">
+    <p style="color:{card_text}; margin:8px 0 0; font-size:0.95rem;">
         {t("alianzas_desc")}
     </p>
 </div>
@@ -63,10 +67,10 @@ with st.expander(t("synergy_expander")):
         with col:
             propuesta = t("synergy_proposal").format(tipo=desc.lower())
             st.markdown(f"""
-            <div style="background:#111827; border:1px solid #2d3748; border-radius:10px;
+            <div style="background:{card_bg}; border:1px solid {card_border}; border-radius:10px;
                         padding:16px; margin-bottom:12px;">
-                <p style="color:#a8e6cf; font-weight:600; margin:0 0 6px;">{desc}</p>
-                <p style="color:#64748b; font-size:0.85rem; margin:0;">{propuesta}</p>
+                <p style="color:{card_title}; font-weight:600; margin:0 0 6px;">{desc}</p>
+                <p style="color:{muted}; font-size:0.85rem; margin:0;">{propuesta}</p>
             </div>
             """, unsafe_allow_html=True)
 
