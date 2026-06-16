@@ -7,23 +7,21 @@ from pathlib import Path
 
 from app.core.config import config
 from app.core.i18n import t
-from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
+from app.ui.components.theme import inject_theme_css, inject_watermark
 
-st.set_page_config(page_title="Ajustes · ORESNA", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Ajustes · ORESNA", page_icon="O", layout="wide")
 
 inject_theme_css()
 inject_watermark()
-render_theme_toggle(sidebar=True)
 
-theme = get_theme()
-gold  = "#8a6a18" if theme == "light" else "#e2c36b"
-muted = "#64748b"
+GOLD  = "#e2c36b"
+MUTED = "#94a3b8"
 
 st.markdown(f"""
-<h1 style="color:{gold}; font-weight:800; font-size:2rem; margin-bottom:4px;">
+<h1 style="color:{GOLD}; font-weight:800; font-size:2rem; margin-bottom:4px;">
     {t("config_title")}
 </h1>
-<p style="color:{muted}; font-size:0.95rem; margin-bottom:28px;">
+<p style="color:{MUTED}; font-size:0.95rem; margin-bottom:28px;">
     {t("config_subtitle")}
 </p>
 """, unsafe_allow_html=True)
@@ -303,25 +301,25 @@ with tab5:
     st.markdown("#### Información del Desarrollador")
     st.markdown("<br>", unsafe_allow_html=True)
 
-    surf  = "#f1f5f9" if theme == "light" else "#111827"
-    bord  = "#e2e8f0" if theme == "light" else "#2d3748"
-    body  = "#334155" if theme == "light" else "#94a3b8"
+    surf  = "#111827"
+    bord  = "#2d3748"
+    body  = "#94a3b8"
 
     col_dev, col_ver = st.columns([3, 1])
     with col_dev:
         st.markdown(f"""
 <div style="background:{surf}; border:1px solid {bord};
             border-radius:12px; padding:28px 32px;">
-    <p style="font-size:1.15rem; font-weight:700; margin:0 0 2px; color:{gold}; letter-spacing:-0.3px;">
+    <p style="font-size:1.15rem; font-weight:700; margin:0 0 2px; color:{GOLD}; letter-spacing:-0.3px;">
         Iñigo Del Mazo Monreal
     </p>
-    <p style="color:{muted}; margin:0 0 18px; font-size:0.85rem; letter-spacing:0.3px; text-transform:uppercase;">
+    <p style="color:{MUTED}; margin:0 0 18px; font-size:0.85rem; letter-spacing:0.3px; text-transform:uppercase;">
         Desarrollador de software
     </p>
     <p style="color:{body}; font-size:0.9rem; line-height:1.65; margin:0;">
         Desarrollo e implantación de herramientas digitales a medida para empresas.
         Esta aplicación fue construida específicamente para
-        <strong style="color:{gold};">ORESNA Inmobiliaria</strong> (Navarra, España)
+        <strong style="color:{GOLD};">ORESNA Inmobiliaria</strong> (Navarra, España)
         con el objetivo de automatizar la captación comercial B2B mediante Inteligencia Artificial.
     </p>
 </div>
@@ -331,10 +329,10 @@ with tab5:
         st.markdown(f"""
 <div style="background:{surf}; border:1px solid {bord};
             border-radius:12px; padding:24px; text-align:center; height:100%;">
-    <p style="color:{muted}; font-size:0.7rem; margin:0 0 6px; text-transform:uppercase; letter-spacing:1.5px;">Versión</p>
-    <p style="font-size:1.8rem; font-weight:800; color:{gold}; margin:0; letter-spacing:-1px;">1.0.0</p>
-    <p style="color:{muted}; font-size:0.72rem; margin:10px 0 0; letter-spacing:0.5px;">ORESNA CAPTADOR</p>
-    <p style="color:{muted}; font-size:0.7rem; margin:4px 0 0;">2026</p>
+    <p style="color:{MUTED}; font-size:0.7rem; margin:0 0 6px; text-transform:uppercase; letter-spacing:1.5px;">Versión</p>
+    <p style="font-size:1.8rem; font-weight:800; color:{GOLD}; margin:0; letter-spacing:-1px;">1.0.0</p>
+    <p style="color:{MUTED}; font-size:0.72rem; margin:10px 0 0; letter-spacing:0.5px;">ORESNA CAPTADOR</p>
+    <p style="color:{MUTED}; font-size:0.7rem; margin:4px 0 0;">2026</p>
 </div>
         """, unsafe_allow_html=True)
 

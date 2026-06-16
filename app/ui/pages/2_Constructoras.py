@@ -8,20 +8,18 @@ import pandas as pd
 from app.core.db import SessionLocal, Contacto, Campana
 from app.core.config import config
 from app.core.i18n import t
-from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
+from app.ui.components.theme import inject_theme_css, inject_watermark
 
-st.set_page_config(page_title="Constructoras · ORESNA", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Constructoras · ORESNA", page_icon="O", layout="wide")
 
 inject_theme_css()
 inject_watermark()
-render_theme_toggle(sidebar=True)
 
-theme = get_theme()
-gold   = "#8a6a18" if theme == "light" else "#e2c36b"
-muted  = "#64748b"
-bg1s   = "#eff6ff" if theme == "light" else "#1a1a2e"
-bg1e   = "#dbeafe" if theme == "light" else "#0f3460"
-border1 = "#bfdbfe" if theme == "light" else "#1e3a5f"
+GOLD   = "#e2c36b"
+MUTED  = "#94a3b8"
+BG1S   = "#1a1a2e"
+BG1E   = "#0f3460"
+BORD1  = "#1e3a5f"
 
 
 def cargar_constructoras(filtro_estado=None, filtro_localidad=None):
@@ -38,12 +36,12 @@ def cargar_constructoras(filtro_estado=None, filtro_localidad=None):
 
 
 st.markdown(f"""
-<div style="background:linear-gradient(135deg, {bg1s} 0%, {bg1e} 100%); border-radius:16px;
-            padding:28px 32px; margin-bottom:28px; border:1px solid {border1};">
-    <h1 style="color:{gold}; font-size:1.8rem; font-weight:800; margin:0;">
+<div style="background:linear-gradient(135deg, {BG1S} 0%, {BG1E} 100%); border-radius:16px;
+            padding:28px 32px; margin-bottom:28px; border:1px solid {BORD1};">
+    <h1 style="color:{GOLD}; font-size:1.8rem; font-weight:800; margin:0;">
         {t("constructoras_title")}
     </h1>
-    <p style="color:{muted}; margin:8px 0 0; font-size:0.95rem;">
+    <p style="color:{MUTED}; margin:8px 0 0; font-size:0.95rem;">
         {t("constructoras_desc")}
     </p>
 </div>

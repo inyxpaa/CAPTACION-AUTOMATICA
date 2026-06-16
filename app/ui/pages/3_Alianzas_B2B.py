@@ -8,23 +8,21 @@ import pandas as pd
 from app.core.db import SessionLocal, Contacto
 from app.core.config import config
 from app.core.i18n import t
-from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
+from app.ui.components.theme import inject_theme_css, inject_watermark
 
-st.set_page_config(page_title="Alianzas B2B · ORESNA", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Alianzas B2B · ORESNA", page_icon="O", layout="wide")
 
 inject_theme_css()
 inject_watermark()
-render_theme_toggle(sidebar=True)
 
-theme = get_theme()
-muted  = "#64748b"
-bg2s   = "#f0fdf4" if theme == "light" else "#0d3b2e"
-bg2e   = "#dcfce7" if theme == "light" else "#1a5c45"
-border2 = "#86efac" if theme == "light" else "#1e5c3a"
-card_title = "#065f46" if theme == "light" else "#a8e6cf"
-card_text  = "#047857" if theme == "light" else "#7ec8a0"
-card_bg    = "#f0fdf4" if theme == "light" else "#111827"
-card_border = "#bbf7d0" if theme == "light" else "#2d3748"
+MUTED       = "#94a3b8"
+BG2S        = "#0d3b2e"
+BG2E        = "#1a5c45"
+BORD2       = "#1e5c3a"
+CARD_TITLE  = "#a8e6cf"
+CARD_TEXT   = "#7ec8a0"
+CARD_BG     = "#111827"
+CARD_BORDER = "#2d3748"
 
 TIPOS_EMPRESA = {
     "reformas": "Reformas",
@@ -48,12 +46,12 @@ def cargar_alianzas(filtro_tipo=None, filtro_estado=None):
 
 
 st.markdown(f"""
-<div style="background:linear-gradient(135deg, {bg2s} 0%, {bg2e} 100%); border-radius:16px;
-            padding:28px 32px; margin-bottom:28px; border:1px solid {border2};">
-    <h1 style="color:{card_title}; font-size:1.8rem; font-weight:800; margin:0;">
+<div style="background:linear-gradient(135deg, {BG2S} 0%, {BG2E} 100%); border-radius:16px;
+            padding:28px 32px; margin-bottom:28px; border:1px solid {BORD2};">
+    <h1 style="color:{CARD_TITLE}; font-size:1.8rem; font-weight:800; margin:0;">
         {t("alianzas_title")}
     </h1>
-    <p style="color:{card_text}; margin:8px 0 0; font-size:0.95rem;">
+    <p style="color:{CARD_TEXT}; margin:8px 0 0; font-size:0.95rem;">
         {t("alianzas_desc")}
     </p>
 </div>
@@ -67,10 +65,10 @@ with st.expander(t("synergy_expander")):
         with col:
             propuesta = t("synergy_proposal").format(tipo=desc.lower())
             st.markdown(f"""
-            <div style="background:{card_bg}; border:1px solid {card_border}; border-radius:10px;
+            <div style="background:{CARD_BG}; border:1px solid {CARD_BORDER}; border-radius:10px;
                         padding:16px; margin-bottom:12px;">
-                <p style="color:{card_title}; font-weight:600; margin:0 0 6px;">{desc}</p>
-                <p style="color:{muted}; font-size:0.85rem; margin:0;">{propuesta}</p>
+                <p style="color:{CARD_TITLE}; font-weight:600; margin:0 0 6px;">{desc}</p>
+                <p style="color:{MUTED}; font-size:0.85rem; margin:0;">{propuesta}</p>
             </div>
             """, unsafe_allow_html=True)
 

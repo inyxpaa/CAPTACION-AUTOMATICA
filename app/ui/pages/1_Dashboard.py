@@ -8,17 +8,15 @@ from datetime import datetime
 
 from app.core.db import SessionLocal, Contacto, Campana, EmailLog
 from app.core.i18n import t, get_lang
-from app.ui.components.theme import inject_theme_css, inject_watermark, render_theme_toggle, get_theme
+from app.ui.components.theme import inject_theme_css, inject_watermark
 
-st.set_page_config(page_title="Panel de Control · ORESNA", page_icon="🏠", layout="wide")
+st.set_page_config(page_title="Panel de Control · ORESNA", page_icon="O", layout="wide")
 
 inject_theme_css()
 inject_watermark()
-render_theme_toggle(sidebar=True)
 
-theme = get_theme()
-gold = "#8a6a18" if theme == "light" else "#e2c36b"
-muted = "#64748b"
+GOLD  = "#e2c36b"
+MUTED = "#94a3b8"
 
 
 def cargar_stats() -> dict:
@@ -70,10 +68,10 @@ def cargar_stats() -> dict:
 
 
 st.markdown(f"""
-<h1 style="color:{gold}; font-weight:800; font-size:2rem; margin-bottom:4px;">
+<h1 style="color:{GOLD}; font-weight:800; font-size:2rem; margin-bottom:4px;">
     {t("dashboard_title")}
 </h1>
-<p style="color:{muted}; font-size:0.95rem; margin-bottom:28px;">
+<p style="color:{MUTED}; font-size:0.95rem; margin-bottom:28px;">
     {t("dashboard_subtitle")}
 </p>
 """, unsafe_allow_html=True)
